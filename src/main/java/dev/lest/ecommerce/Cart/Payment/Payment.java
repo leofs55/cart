@@ -22,4 +22,6 @@ public class Payment {
     private Long clientId;
 
     private String cartId;
+
+    private Boolean validated;
 }
