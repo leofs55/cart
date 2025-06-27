@@ -6,7 +6,7 @@ import dev.lest.ecommerce.Cart.Cart.resquests.CartCreateRequest;
 import dev.lest.ecommerce.Cart.Product.Product;
 import dev.lest.ecommerce.Cart.Product.mapper.ProductMapper;
 import dev.lest.ecommerce.Cart.Product.response.ProductReponse;
-import dev.lest.ecommerce.Cart.Status;
+import dev.lest.ecommerce.Cart.Cart.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

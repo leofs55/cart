@@ -1,7 +1,6 @@
 package dev.lest.ecommerce.Cart.Cart;
 
 import dev.lest.ecommerce.Cart.Product.Product;
-import dev.lest.ecommerce.Cart.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

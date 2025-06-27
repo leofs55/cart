@@ -3,7 +3,6 @@ package dev.lest.ecommerce.Cart.Cart;
 import dev.lest.ecommerce.Cart.Cart.mapper.CartDeleteMapper;
 import dev.lest.ecommerce.Cart.Cart.reponses.CartDeleteResponse;
 import dev.lest.ecommerce.Cart.Product.ProductService;
-import dev.lest.ecommerce.Cart.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
