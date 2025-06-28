@@ -39,7 +39,7 @@ public class CartCreateMapper {
     public CartCreateResponse map(Cart cart) {
 
         List<ProductReponse> productReponseList = cart.getProducts().stream()
-                .map(productMapper::map)
+                .map(ProductMapper::map)
                 .toList();
 
         return CartCreateResponse.builder()

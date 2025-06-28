@@ -3,12 +3,19 @@ package dev.lest.ecommerce.Cart.Cart;
 import dev.lest.ecommerce.Cart.Cart.mapper.CartCreateMapper;
 import dev.lest.ecommerce.Cart.Cart.mapper.CartDeleteMapper;
 import dev.lest.ecommerce.Cart.Cart.mapper.CartUpdateMapper;
+import dev.lest.ecommerce.Cart.Cart.mapper.CartValidMapper;
 import dev.lest.ecommerce.Cart.Cart.reponses.CartCreateResponse;
 import dev.lest.ecommerce.Cart.Cart.reponses.CartDeleteResponse;
 import dev.lest.ecommerce.Cart.Cart.reponses.CartUpdateResponse;
+import dev.lest.ecommerce.Cart.Cart.reponses.CartValidResponse;
 import dev.lest.ecommerce.Cart.Cart.resquests.CartCreateRequest;
 import dev.lest.ecommerce.Cart.Cart.resquests.CartDeleteRequest;
 import dev.lest.ecommerce.Cart.Cart.resquests.CartUpdateRequest;
+import dev.lest.ecommerce.Cart.Payment.Payment;
+import dev.lest.ecommerce.Cart.Payment.PaymentService;
+import dev.lest.ecommerce.Cart.Payment.mapper.PaymentMapper;
+import dev.lest.ecommerce.Cart.Payment.request.PaymentRequest;
+import dev.lest.ecommerce.Cart.Payment.response.PaymentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
 
     private final CartService cartService;
+    private final PaymentService paymentService;
+
     private final CartCreateMapper cartCreateMapper;
     private final CartUpdateMapper cartUpdateMapper;
 
@@ -42,9 +51,16 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.FOUND).body(cartService.getCart(id));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Cart> updadateStatusCartById(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(cartService.updateStatusCart(id));
+    @PostMapping
+    public ResponseEntity<CartValidResponse> cartValidatePayment(@RequestBody PaymentRequest paymentRequest) {
+
+        String cartId = paymentRequest.cartId();
+
+        Payment payment = paymentService.validatePayment(PaymentMapper.map(paymentRequest));
+
+        Cart cart = cartService.updateStatusCart(cartId);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(CartValidMapper.map(cart, payment));
     }
 
     @DeleteMapping

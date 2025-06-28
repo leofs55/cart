@@ -37,7 +37,7 @@ public class CartUpdateMapper {
     public CartUpdateResponse map(Cart cart) {
 
         List<ProductReponse> productReponseList = cart.getProducts().stream()
-                .map(productMapper::map)
+                .map(ProductMapper::map)
                 .toList();
 
         return CartUpdateResponse.builder()
