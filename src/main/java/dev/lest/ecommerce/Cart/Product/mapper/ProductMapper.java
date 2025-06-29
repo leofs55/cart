@@ -27,7 +27,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public ProductReponse map(Product product) {
+    public static ProductReponse map(Product product) {
         return ProductReponse.builder()
                 .id(product.getId())
                 .title(product.getTitle())
