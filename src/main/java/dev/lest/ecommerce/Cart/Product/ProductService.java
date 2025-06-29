@@ -17,7 +17,7 @@ public class ProductService {
     private final PlatziStoreClient platziStoreClient;
 
     @Cacheable(value = "products")
-    public List<PlatziRecordResponse> getAllProducts(){
+    public List<PlatziRecordResponse> getAllProducts() {
         log.info("Getting all products");
         return platziStoreClient.getAllProducts();
     }

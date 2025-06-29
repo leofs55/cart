@@ -50,10 +50,10 @@ public class PaymentService {
     public void paymentPending(PaymentType type, String cartId) {
 
         repository.findByCartIdAndType(cartId, type)
-                .ifPresent( paymentPending -> {
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                            "Já existe um pagamento aberto para este usuario!");
-                    }
+                .ifPresent(paymentPending -> {
+                            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                                    "Já existe um pagamento aberto para este usuario!");
+                        }
                 );
 
     }

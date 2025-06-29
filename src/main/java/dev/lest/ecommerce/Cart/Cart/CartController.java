@@ -15,7 +15,6 @@ import dev.lest.ecommerce.Cart.Payment.Payment;
 import dev.lest.ecommerce.Cart.Payment.PaymentService;
 import dev.lest.ecommerce.Cart.Payment.mapper.PaymentMapper;
 import dev.lest.ecommerce.Cart.Payment.request.PaymentRequest;
-import dev.lest.ecommerce.Cart.Payment.response.PaymentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,28 +36,30 @@ public class CartController {
     public ResponseEntity<CartCreateResponse> createCart(@RequestBody CartCreateRequest cart) {
 
         Cart cartCreated = cartService.createCart(cartCreateMapper.map(cart));
+
         return ResponseEntity.status(HttpStatus.CREATED).body(cartCreateMapper.map(cartCreated));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CartUpdateResponse> updateCart(@PathVariable String id, @RequestBody CartUpdateRequest cart) {
+
         Cart updatedCart = cartService.updateCartProducts(id, cartUpdateMapper.map(cart));
+
         return ResponseEntity.status(HttpStatus.CREATED).body(cartUpdateMapper.map(updatedCart));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Cart> getCartById(@PathVariable String id) {
+
         return ResponseEntity.status(HttpStatus.FOUND).body(cartService.getCart(id));
     }
 
-    @PostMapping
-    public ResponseEntity<CartValidResponse> cartValidatePayment(@RequestBody PaymentRequest paymentRequest) {
-
-        String cartId = paymentRequest.cartId();
+    @PostMapping("/{id}/payment")
+    public ResponseEntity<CartValidResponse> cartValidatePayment(@PathVariable String id, @RequestBody PaymentRequest paymentRequest) {
 
         Payment payment = paymentService.validatePayment(PaymentMapper.map(paymentRequest));
 
-        Cart cart = cartService.updateStatusCart(cartId);
+        Cart cart = cartService.updateStatusCart(id);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(CartValidMapper.map(cart, payment));
     }
@@ -67,6 +68,7 @@ public class CartController {
     public ResponseEntity<CartDeleteResponse> deleteCart(@RequestBody CartDeleteRequest cart) {
 
         CartDeleteResponse cartDeleteResponse = cartService.deleteCart(CartDeleteMapper.map(cart));
+
         return ResponseEntity.status(HttpStatus.CREATED).body(cartDeleteResponse);
     }
 }

@@ -5,7 +5,6 @@ import dev.lest.ecommerce.Cart.Product.Product;
 import dev.lest.ecommerce.Cart.Product.ProductService;
 import dev.lest.ecommerce.Cart.Product.request.ProductRequest;
 import dev.lest.ecommerce.Cart.Product.response.ProductReponse;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

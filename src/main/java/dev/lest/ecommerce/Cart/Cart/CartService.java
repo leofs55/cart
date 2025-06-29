@@ -20,16 +20,16 @@ public class CartService {
     public Cart createCart(Cart cart) {
 
         cartRepository.findByClientIdAndStatus(cart.getClientId(), Status.OPEN)
-                        .ifPresent( cart1 -> {
-                            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                                    "Já existe um carrinho aberto para este usuario!");
-                        });
+                .ifPresent(cart1 -> {
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                            "Já existe um carrinho aberto para este usuario!");
+                });
 
         cart.calculateTotalPrice();
         return cartRepository.save(cart);
     }
 
-    public Cart updateCartProducts (String id, Cart cart) {
+    public Cart updateCartProducts(String id, Cart cart) {
 
         Optional<Cart> cartOptional = cartRepository.findById(id);
 
