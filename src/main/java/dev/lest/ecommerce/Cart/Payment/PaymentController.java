@@ -33,7 +33,7 @@ public class PaymentController {
                 .status(HttpStatus.ACCEPTED)
                 .body(PaymentMapper
                         .map(service.
-                                validatePayment(paymentRequest.type(), paymentRequest.cartId()
+                                validatePayment(PaymentMapper.map(paymentRequest)
                                 )
                         )
                 );

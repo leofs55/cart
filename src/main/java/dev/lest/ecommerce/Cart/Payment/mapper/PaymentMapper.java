@@ -1,7 +1,9 @@
 package dev.lest.ecommerce.Cart.Payment.mapper;
 
 import dev.lest.ecommerce.Cart.Payment.Payment;
+import dev.lest.ecommerce.Cart.Payment.PaymentType;
 import dev.lest.ecommerce.Cart.Payment.request.PaymentRequest;
+import dev.lest.ecommerce.Cart.Payment.request.ValidatePaymentRequest;
 import dev.lest.ecommerce.Cart.Payment.response.PaymentResponse;
 import org.springframework.stereotype.Component;
 
@@ -25,4 +27,10 @@ public class PaymentMapper {
                 .build();
     }
 
+    public static Payment map(ValidatePaymentRequest validatePaymentRequest) {
+        return Payment.builder()
+                .type(validatePaymentRequest.type())
+                .cartId(validatePaymentRequest.cartId())
+                .build();
+    }
 }

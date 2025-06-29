@@ -37,9 +37,9 @@ public class PaymentService {
 
     }
 
-    public Payment validatePayment(PaymentType type, String cartId) {
+    public Payment validatePayment(Payment paymentRequest) {
 
-        Payment payment = findPaymentByTypeAndCartId(type, cartId);
+        Payment payment = findPaymentByTypeAndCartId(paymentRequest.getType(), paymentRequest.getCartId());
 
         payment.setValidated(Boolean.TRUE);
 
