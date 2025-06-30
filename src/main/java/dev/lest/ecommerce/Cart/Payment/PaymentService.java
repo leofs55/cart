@@ -1,5 +1,7 @@
 package dev.lest.ecommerce.Cart.Payment;
 
+import dev.lest.ecommerce.Cart.exception.DataNotFoundException;
+import dev.lest.ecommerce.Cart.exception.PaymentAlreadyPendingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ public class PaymentService {
             return optionalPayment.get();
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Objeto não encontrado");
+        throw new DataNotFoundException("Objeto não encontrado");
 
     }
 
@@ -33,7 +35,7 @@ public class PaymentService {
             return optionalPayment.get();
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Objeto não encontrado");
+        throw new DataNotFoundException( "Objeto não encontrado");
 
     }
 
@@ -51,8 +53,7 @@ public class PaymentService {
 
         repository.findByCartIdAndType(cartId, type)
                 .ifPresent(paymentPending -> {
-                            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                                    "Já existe um pagamento aberto para este usuario!");
+                            throw new PaymentAlreadyPendingException("Já existe um pagamento aberto para este usuario!");
                         }
                 );
 
@@ -70,8 +71,7 @@ public class PaymentService {
 
         } catch (ResponseStatusException e) {
 
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                    "Já existe um pagamento aberto para este usuario!");
+            throw new DataNotFoundException("Já existe um pagamento aberto para este usuario!");
         }
 
     }

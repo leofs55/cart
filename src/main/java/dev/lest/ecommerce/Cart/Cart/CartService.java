@@ -3,6 +3,8 @@ package dev.lest.ecommerce.Cart.Cart;
 import dev.lest.ecommerce.Cart.Cart.mapper.CartDeleteMapper;
 import dev.lest.ecommerce.Cart.Cart.reponses.CartDeleteResponse;
 import dev.lest.ecommerce.Cart.Product.ProductService;
+import dev.lest.ecommerce.Cart.exception.CartAlreadyOpenException;
+import dev.lest.ecommerce.Cart.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,7 @@ public class CartService {
 
         cartRepository.findByClientIdAndStatus(cart.getClientId(), Status.OPEN)
                 .ifPresent(cart1 -> {
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                            "Já existe um carrinho aberto para este usuario!");
+                    throw new CartAlreadyOpenException("Já existe um carrinho aberto para este usuario!");
                 });
 
         cart.calculateTotalPrice();
@@ -38,14 +39,14 @@ public class CartService {
             cartUpdadted.calculateTotalPrice();
             return cartRepository.save(cartUpdadted);
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Objeto não encontrado");
+        throw new DataNotFoundException("Objeto não encontrado");
     }
 
     public Cart getCart(String cartId) {
 
         return cartRepository.
                 findById(cartId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Objeto não encontrado"));
+                .orElseThrow(() -> new DataNotFoundException("Objeto não encontrado"));
     }
 
     public Cart updateStatusCart(String id) {
@@ -67,7 +68,7 @@ public class CartService {
             return CartDeleteMapper.map(cart.getId(), "Objeto encontrado e deletado!");
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Objeto não encontrado");
+        throw new DataNotFoundException("Objeto não encontrado");
     }
 
 }

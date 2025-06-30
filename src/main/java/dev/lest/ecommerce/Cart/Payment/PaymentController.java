@@ -42,7 +42,7 @@ public class PaymentController {
     @GetMapping("/{cartId}")
     public ResponseEntity<PaymentResponse> getPayment(@PathVariable String cartId) {
         return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(PaymentMapper
                         .map(service
                                 .findPaymentByCartId(cartId)

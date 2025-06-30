@@ -51,7 +51,7 @@ public class CartController {
     @GetMapping("/{id}")
     public ResponseEntity<Cart> getCartById(@PathVariable String id) {
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(cartService.getCart(id));
+        return ResponseEntity.status(HttpStatus.OK).body(cartService.getCart(id));
     }
 
     @PostMapping("/{id}/payment")
